@@ -1,0 +1,66 @@
+% !TeX program = latexmk
+% !TeX options = -pdfxe -synctex=1 -interaction=nonstopmode -silent %DOCFILE%
+\documentclass{ctexart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fontawesome}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage[os=win,hyperrefcolorlinks]{menukeys}
+
+\renewmenumacro{\menu}[>]{angularmenus}
+\renewmenumacro{\keys}[+]{shadowedroundedkeys}
+\renewmenumacro{\directory}[/]{paths}
+\makeatletter
+\tw@make@key@box{OS@mac}{\faApple}
+\tw@make@key@box{OS@win}{\faWindows}
+\tw@make@key@macro*{\OS}
+\makeatother
+
+\title{右击直接打开 \textsf{cmd} 窗口}
+\author{啸行\thanks{ranwang.osbert@outlook.com}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Windows 10 系统中，右击可打开 \textsf{Powershell} 窗口\footnote{本文均省略需要 \keys{\shift} 辅助的描述}。
+  修改注册表后，用户可打开 \textsf{cmd} 窗口而非 \textsf{Powershell} 窗口。
+  本文将记录这种修改方法。
+  强烈建议用户在修改注册表前先进行备份。
+\end{abstract}
+
+\section{右击文件夹图标打开 \textsf{cmd} 窗口}
+
+\begin{enumerate}
+  \item 使用 \keys{\OSwin + R} 打开“运行”窗口，输入 \texttt{regedit} 并且点击 \menu{确定}，进入 \menu{注册表编辑器}；
+  \item 在左侧找到 \directory{HKEY\_CLASSES\_ROOT/Directory/shell/cmd}；
+  \item 右键 \menu{cmd} 文件夹，进入 \menu{权限}；
+  \item 点击 \menu{高级}，在 \menu{所有者} 右侧点击 \menu{更改}；
+  \item 在 \menu{输入要选择的对象名称} 处，输入计算机用户名\footnote{在 \keys{\OSwin} 中的\directory{设置 / 账户}内可查计算机用户名}，\menu{检查名称} 无误后，\menu{确定}；
+  \item 勾选 \menu{替换子容器和对象的所有者} 后 \menu{确定}；
+  \item 在 \menu{组或用户名} 中选择 \menu{Administrators}，在下方 \menu{权限} 处 \menu{允许} 完全控制后 \menu{确定}；
+  \item 在右边找到 \menu{HideBasedOnVelocityId}，右键选择 \menu{重命名}，改为 \menu{ShowBasedOnVelocityId}；
+  \item 关闭 \menu{注册表编辑器}。
+\end{enumerate}
+至此，用户右击文件夹图标时便可出现 \menu{在此处打开命令窗口}。
+
+\section{右击文件夹背景打开 \textsf{cmd} 窗口}
+
+\begin{enumerate}
+  \item 使用 \keys{\OSwin + R} 打开“运行”窗口，输入 \texttt{regedit} 并且点击 \menu{确定}，进入 \menu{注册表编辑器}；
+  \item 在左侧找到 \directory{HKEY\_CLASSES\_ROOT/Directory/Background/shell/cmd}；
+  \item 右键 \menu{cmd} 文件夹，进入 \menu{权限}；
+  \item 点击 \menu{高级}，在 \menu{所有者} 右侧点击 \menu{更改}；
+  \item 在 \menu{输入要选择的对象名称} 处，输入计算机用户名，\menu{检查名称} 无误后，\menu{确定}；
+  \item 勾选 \menu{替换子容器和对象的所有者} 后 \menu{确定}；
+  \item 在 \menu{组或用户名} 中选择 \menu{Administrators}，在下方 \menu{权限} 处 \menu{允许} 完全控制后 \menu{确定}；
+  \item 在右边找到 \menu{HideBasedOnVelocityId}，右键选择 \menu{重命名}，改为 \menu{ShowBasedOnVelocityId}；
+  \item 关闭 \menu{注册表编辑器}。
+\end{enumerate}
+至此，用户右击文件夹背景时便可出现 \menu{在此处打开命令窗口}。
+
+\section{后记}
+
+本文概述了显示 \textsf{cmd} 的方式。
+如果要隐藏 \textsf{Powershell}，可以仿照前述方法，将 \menu{ShowBasedOnVelocityId} 重命名为 \menu{HideBasedOnVelocityId} 即可。
+
+\end{document}
