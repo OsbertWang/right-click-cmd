@@ -86,6 +86,12 @@
   del *.eps
 \end{lstlisting}
 
+检查文件的哈希值代码，这里给出的是 \verb|md5|，其他可以考虑 \verb|md2|，\verb|md4|，\verb|SHA1|，\verb|SHA256|，\verb|SHA384|，\verb|SHA512|。
+
+\begin{lstlisting}[language = bash]
+  certutil -hashfile texlive2019.iso md5
+\end{lstlisting}
+
 \section{后记}
 
 本文概述了显示 \textsf{cmd} 的方式。
